@@ -4,7 +4,6 @@ import com.sales_point_service.sales_point_service.dtos.CreateSalePointRequest;
 import com.sales_point_service.sales_point_service.dtos.SalePointDTO;
 import com.sales_point_service.sales_point_service.dtos.UpdateSalePointRequest;
 import com.sales_point_service.sales_point_service.exceptions.SalePointException;
-import com.sales_point_service.sales_point_service.models.SalePoint;
 import com.sales_point_service.sales_point_service.services.SalePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/sale-points")
+@RequestMapping("api/sales-point")
 public class SalePointController {
 
     @Autowired
