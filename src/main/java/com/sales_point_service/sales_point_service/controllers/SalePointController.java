@@ -28,17 +28,17 @@ public class SalePointController {
         return salePointService.getSalePointById(id);
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     public ResponseEntity<SalePointDTO> createSalePoint(@RequestBody CreateSalePointRequest createSalePointRequest) throws SalePointException {
         return salePointService.createSalePoint(createSalePointRequest);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
     public ResponseEntity<SalePointDTO> updateSalePoint(@PathVariable Long id, @RequestBody UpdateSalePointRequest updateSalePointRequest) throws SalePointException {
         return salePointService.updateSalePoint(id, updateSalePointRequest);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteSalePoint(@PathVariable Long id) {
         return salePointService.deleteSalePoint(id);
     }

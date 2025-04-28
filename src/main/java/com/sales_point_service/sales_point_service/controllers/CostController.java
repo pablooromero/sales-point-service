@@ -4,6 +4,7 @@ import com.sales_point_service.sales_point_service.dtos.CostDTO;
 import com.sales_point_service.sales_point_service.dtos.CreateCostRequest;
 import com.sales_point_service.sales_point_service.dtos.ShortestPathDTO;
 import com.sales_point_service.sales_point_service.exceptions.CostException;
+import com.sales_point_service.sales_point_service.exceptions.SalePointException;
 import com.sales_point_service.sales_point_service.services.CostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,17 @@ public class CostController {
     @Autowired
     private CostService costService;
 
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<Set<CostDTO>> findAll() {
         return costService.getAllCosts();
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     public ResponseEntity<String> createCost(@RequestBody CreateCostRequest newCost) throws CostException {
         return costService.createCost(newCost);
     }
 
-    @DeleteMapping("/{fromId}/{toId}")
+    @DeleteMapping("/admin/{fromId}/{toId}")
     public ResponseEntity<String> deleteCost(@PathVariable Long fromId, @PathVariable Long toId) throws CostException {
         return costService.deleteCost(fromId, toId);
     }
@@ -37,7 +38,7 @@ public class CostController {
     public ResponseEntity<ShortestPathDTO> getShortestPath(
             @RequestParam Long from,
             @RequestParam Long to
-    ) throws CostException {
+    ) throws CostException, SalePointException {
         return costService.getShortestPath(from, to);
     }
 
