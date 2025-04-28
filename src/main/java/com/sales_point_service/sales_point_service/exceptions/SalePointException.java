@@ -2,7 +2,7 @@ package com.sales_point_service.sales_point_service.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class SalePointException extends Exception {
+public class SalePointException extends RuntimeException {
     private HttpStatus httpStatus;
     public SalePointException(String message) {
         super(message);

@@ -2,8 +2,10 @@ package com.sales_point_service.sales_point_service.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+@ControllerAdvice
 public class ExceptionHandlers {
     @ExceptionHandler(SalePointException.class)
     public ResponseEntity<String> handleSalePointException(SalePointException e) {
