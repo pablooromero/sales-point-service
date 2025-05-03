@@ -11,6 +11,7 @@ import com.sales_point_service.sales_point_service.models.SalePoint;
 import com.sales_point_service.sales_point_service.repositories.SalePointRepository;
 import com.sales_point_service.sales_point_service.services.SalePointService;
 import com.sales_point_service.sales_point_service.utils.Constants;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SalePointServiceImplementation implements SalePointService {
+
     private static final Logger logger = LoggerFactory.getLogger(SalePointServiceImplementation.class);
 
-    @Autowired
-    private SalePointRepository salePointRepository;
+    private final SalePointRepository salePointRepository;
 
-    @Autowired
-    private CacheManagerFactory cacheManagerFactory;
+    private final CacheManagerFactory cacheManagerFactory;
 
     private CacheManager<Long, SalePoint> getSalePointCache() {
         return cacheManagerFactory.getCacheManager(CacheType.SALE_POINT);

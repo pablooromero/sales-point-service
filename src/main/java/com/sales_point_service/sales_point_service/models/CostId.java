@@ -1,36 +1,24 @@
 package com.sales_point_service.sales_point_service.models;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CostId implements Serializable {
+
     private Long fromId;
+
     private Long toId;
-    public CostId() {}
-
-    public CostId(Long fromId, Long toId) {
-        this.fromId = fromId;
-        this.toId = toId;
-    }
-
-    public Long getFromId() {
-        return fromId;
-    }
-
-    public void setFromId(Long fromId) {
-        this.fromId = fromId;
-    }
-
-    public Long getToId() {
-        return toId;
-    }
-
-    public void setToId(Long toId) {
-        this.toId = toId;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -14,6 +14,7 @@ import com.sales_point_service.sales_point_service.repositories.SalePointReposit
 import com.sales_point_service.sales_point_service.services.CostService;
 import com.sales_point_service.sales_point_service.utils.Constants;
 import com.sales_point_service.sales_point_service.utils.CostUtils;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +27,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CostServiceImplementation implements CostService {
 
     private static final Logger logger = LoggerFactory.getLogger(CostServiceImplementation.class);
 
-    @Autowired
-    private CostRepository costRepository;
+    private final CostRepository costRepository;
 
-    @Autowired
-    private CostUtils costUtils;
+    private final CostUtils costUtils;
 
-    @Autowired
-    private SalePointRepository salePointRepository;
+    private final SalePointRepository salePointRepository;
 
-    @Autowired
-    private CacheManagerFactory cacheManagerFactory;
-
+    private final CacheManagerFactory cacheManagerFactory;
 
     private CacheManager<CostId, Cost> getCostCache() {
         return cacheManagerFactory.getCacheManager(CacheType.COST);
