@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -61,6 +62,7 @@ public class SalePointController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PostMapping("/admin")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<SalePointDTO> createSalePoint(@RequestBody CreateSalePointRequest createSalePointRequest) throws SalePointException {
         return salePointService.createSalePoint(createSalePointRequest);
     }
@@ -74,6 +76,7 @@ public class SalePointController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PutMapping("/admin/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<SalePointDTO> updateSalePoint(@PathVariable Long id, @RequestBody UpdateSalePointRequest updateSalePointRequest) throws SalePointException {
         return salePointService.updateSalePoint(id, updateSalePointRequest);
     }
@@ -86,6 +89,7 @@ public class SalePointController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @DeleteMapping("/admin/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> deleteSalePoint(@PathVariable Long id) {
         return salePointService.deleteSalePoint(id);
     }

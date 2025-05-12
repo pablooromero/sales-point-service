@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -36,6 +37,7 @@ public class CostController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @GetMapping("/admin")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Set<CostDTO>> findAll() {
         return costService.getAllCosts();
     }
@@ -48,6 +50,7 @@ public class CostController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PostMapping("/admin")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> createCost(@RequestBody CreateCostRequest newCost) throws CostException {
         return costService.createCost(newCost);
     }
@@ -60,6 +63,7 @@ public class CostController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @DeleteMapping("/admin/{fromId}/{toId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> deleteCost(@PathVariable Long fromId, @PathVariable Long toId) throws CostException {
         return costService.deleteCost(fromId, toId);
     }
