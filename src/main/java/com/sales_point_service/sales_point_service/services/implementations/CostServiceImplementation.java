@@ -15,9 +15,7 @@ import com.sales_point_service.sales_point_service.services.CostService;
 import com.sales_point_service.sales_point_service.utils.Constants;
 import com.sales_point_service.sales_point_service.utils.CostUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,9 +26,8 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CostServiceImplementation implements CostService {
-
-    private static final Logger logger = LoggerFactory.getLogger(CostServiceImplementation.class);
 
     private final CostRepository costRepository;
 
@@ -47,18 +44,18 @@ public class CostServiceImplementation implements CostService {
 
     @Override
     public Cost saveCost(Cost cost) {
-        logger.info(Constants.SAVING_COST, cost);
+        log.info(Constants.SAVING_COST, cost);
 
         Cost savedCost = costRepository.save(cost);
         getCostCache().add(cost);
 
-        logger.info(Constants.COST_SAVED_SUCCESSFULLY);
+        log.info(Constants.COST_SAVED_SUCCESSFULLY);
         return savedCost;
     }
 
     @Override
     public ResponseEntity<Set<CostDTO>> getAllCosts() {
-        logger.info(Constants.GET_ALL_COSTS);
+        log.info(Constants.GET_ALL_COSTS);
 
         CacheManager<CostId, Cost> costCache = getCostCache();
         if (costCache.isEmpty()) {
@@ -78,13 +75,13 @@ public class CostServiceImplementation implements CostService {
                 .collect(Collectors.toSet());
 
 
-        logger.info(Constants.GET_ALL_COSTS_SUCCESSFULLY);
+        log.info(Constants.GET_ALL_COSTS_SUCCESSFULLY);
         return ResponseEntity.ok(costs);
     }
 
     @Override
     public ResponseEntity<String> createCost(CreateCostRequest newCost) throws CostException {
-        logger.info(Constants.CREATING_COST);
+        log.info(Constants.CREATING_COST);
         LocalDateTime now = LocalDateTime.now();
 
         if (newCost.cost() < 0) {
@@ -101,14 +98,14 @@ public class CostServiceImplementation implements CostService {
 
         saveCost(cost);
 
-        logger.info(Constants.COST_CREATED_SUCCESSFULLY);
+        log.info(Constants.COST_CREATED_SUCCESSFULLY);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<String> deleteCost(Long fromId, Long toId) throws CostException {
-        logger.info(Constants.DELETING_COST, fromId, toId);
+        log.info(Constants.DELETING_COST, fromId, toId);
 
         CostId costId = costUtils.createOrderedCostId(fromId, toId);
         Optional<Cost> cost = costRepository.findById(costId);
@@ -120,13 +117,13 @@ public class CostServiceImplementation implements CostService {
         costRepository.deleteById(costId);
         getCostCache().remove(costId);
 
-        logger.info(Constants.COST_DELETED_SUCCESSFULLY);
+        log.info(Constants.COST_DELETED_SUCCESSFULLY);
         return new ResponseEntity<>(Constants.COST_DELETED, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Set<CostDTO>> getDirectConnections(Long originId) throws CostException {
-        logger.info(Constants.GET_DIRECT_CONNECTIONS);
+        log.info(Constants.GET_DIRECT_CONNECTIONS);
 
         CacheManager<CostId, Cost> costCache = getCostCache();
 
@@ -154,7 +151,7 @@ public class CostServiceImplementation implements CostService {
                 })
                 .collect(Collectors.toSet());
 
-        logger.info(Constants.GET_DIRECT_CONNECTIONS_SUCCESSFULLY);
+        log.info(Constants.GET_DIRECT_CONNECTIONS_SUCCESSFULLY);
 
         return ResponseEntity.ok(result);
     }
@@ -163,7 +160,7 @@ public class CostServiceImplementation implements CostService {
     @Override
     @SuppressWarnings("unchecked")
     public ResponseEntity<ShortestPathDTO> getShortestPath(Long origin, Long destination) throws CostException, SalePointException {
-        logger.info(Constants.GET_SHORTEST_PATH);
+        log.info(Constants.GET_SHORTEST_PATH);
 
         CacheManager<CostId, Cost> costCache = getCostCache();
 
@@ -192,7 +189,7 @@ public class CostServiceImplementation implements CostService {
                         .orElseThrow(() -> new SalePointException(Constants.SALE_POINTS_NOT_FOUND + id, HttpStatus.NOT_FOUND)))
                 .toList();
 
-        logger.info(Constants.GET_SHORTEST_PATH_SUCCESSFULLY);
+        log.info(Constants.GET_SHORTEST_PATH_SUCCESSFULLY);
 
         ShortestPathDTO response = new ShortestPathDTO(fullPath, totalCost);
         return new ResponseEntity<>(response, HttpStatus.OK);

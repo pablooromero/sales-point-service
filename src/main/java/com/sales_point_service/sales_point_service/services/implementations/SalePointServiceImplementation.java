@@ -12,9 +12,7 @@ import com.sales_point_service.sales_point_service.repositories.SalePointReposit
 import com.sales_point_service.sales_point_service.services.SalePointService;
 import com.sales_point_service.sales_point_service.utils.Constants;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,9 +22,8 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SalePointServiceImplementation implements SalePointService {
-
-    private static final Logger logger = LoggerFactory.getLogger(SalePointServiceImplementation.class);
 
     private final SalePointRepository salePointRepository;
 
@@ -38,18 +35,18 @@ public class SalePointServiceImplementation implements SalePointService {
 
     @Override
     public SalePoint saveSalePoint(SalePoint salePoint) {
-        logger.info(Constants.SAVING_SALE_POINT, salePoint);
+        log.info(Constants.SAVING_SALE_POINT, salePoint);
 
         SalePoint savedSalePoint = salePointRepository.save(salePoint);
         getSalePointCache().add(savedSalePoint);
 
-        logger.info(Constants.SALE_POINT_SAVED_SUCCESSFULLY);
+        log.info(Constants.SALE_POINT_SAVED_SUCCESSFULLY);
         return savedSalePoint;
     }
 
     @Override
     public ResponseEntity<Set<SalePointDTO>> getAllSalePoints() {
-        logger.info(Constants.GET_ALL_SALES_POINT);
+        log.info(Constants.GET_ALL_SALES_POINT);
 
         CacheManager<Long, SalePoint> salePointCache = getSalePointCache();
         if (salePointCache.isEmpty()) {
@@ -61,13 +58,13 @@ public class SalePointServiceImplementation implements SalePointService {
                 .map(salePoint -> new SalePointDTO(salePoint.getId(), salePoint.getName()))
                 .collect(Collectors.toSet());
 
-        logger.info(Constants.GET_ALL_SALES_POINT_SUCCESSFULLY);
+        log.info(Constants.GET_ALL_SALES_POINT_SUCCESSFULLY);
         return new ResponseEntity<>(salePoints, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<SalePointDTO> getSalePointById(Long id) throws SalePointException {
-        logger.info(Constants.GET_SALE_POINT, id);
+        log.info(Constants.GET_SALE_POINT, id);
 
         CacheManager<Long, SalePoint> salePointCache = getSalePointCache();
 
@@ -80,7 +77,7 @@ public class SalePointServiceImplementation implements SalePointService {
             salePointCache.add(salePoint);
         }
 
-        logger.info(Constants.GET_SALE_POINT_SUCCESSFULLY);
+        log.info(Constants.GET_SALE_POINT_SUCCESSFULLY);
 
         SalePointDTO salePointDTO = new SalePointDTO(salePoint.getId(), salePoint.getName());
         return new ResponseEntity<>(salePointDTO, HttpStatus.OK);
@@ -88,25 +85,23 @@ public class SalePointServiceImplementation implements SalePointService {
 
     @Override
     public ResponseEntity<SalePointDTO> createSalePoint(CreateSalePointRequest newSalePoint) throws SalePointException {
-        logger.info(Constants.CREATING_SALE_POINT, newSalePoint);
-
+        log.info(Constants.CREATING_SALE_POINT, newSalePoint);
         validateName(newSalePoint.name());
 
         SalePoint salePoint = new SalePoint();
         salePoint.setName(newSalePoint.name());
 
-        saveSalePoint(salePoint);
+        SalePoint savedSalePoint = saveSalePoint(salePoint);
 
-        logger.info(Constants.SALE_POINT_CREATED_SUCCESSFULLY);
+        log.info(Constants.SALE_POINT_CREATED_SUCCESSFULLY);
 
-        SalePointDTO salePointDTO = new SalePointDTO(salePoint.getId(), salePoint.getName());
+        SalePointDTO salePointDTO = new SalePointDTO(savedSalePoint.getId(), savedSalePoint.getName());
         return new ResponseEntity<>(salePointDTO, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<SalePointDTO> updateSalePoint(Long id, UpdateSalePointRequest updateSalePoint) throws SalePointException {
-        logger.info(Constants.UPDATING_SALE_POINT, id);
-
+        log.info(Constants.UPDATING_SALE_POINT, id);
         validateName(updateSalePoint.name());
 
         CacheManager<Long, SalePoint> salePointCache = getSalePointCache();
@@ -119,17 +114,17 @@ public class SalePointServiceImplementation implements SalePointService {
         }
 
         salePoint.setName(updateSalePoint.name());
-        saveSalePoint(salePoint);
+        SalePoint updatedSalePoint = saveSalePoint(salePoint);
 
-        logger.info(Constants.SALE_POINT_UPDATED_SUCCESSFULLY);
+        log.info(Constants.SALE_POINT_UPDATED_SUCCESSFULLY);
 
-        SalePointDTO salePointDTO = new SalePointDTO(salePoint.getId(), salePoint.getName());
+        SalePointDTO salePointDTO = new SalePointDTO(updatedSalePoint.getId(), updatedSalePoint.getName());
         return new ResponseEntity<>(salePointDTO, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<String> deleteSalePoint(Long id) {
-        logger.info(Constants.DELETING_SALE_POINT, id);
+        log.info(Constants.DELETING_SALE_POINT, id);
 
         if(!salePointRepository.existsById(id)) {
             return new ResponseEntity<>(Constants.SALE_POINTS_NOT_FOUND + id, HttpStatus.NOT_FOUND);
@@ -138,7 +133,7 @@ public class SalePointServiceImplementation implements SalePointService {
         salePointRepository.deleteById(id);
         getSalePointCache().remove(id);
 
-        logger.info(Constants.SALE_POINT_DELETED_SUCCESSFULLY);
+        log.info(Constants.SALE_POINT_DELETED_SUCCESSFULLY);
 
         return new ResponseEntity<>(Constants.SALE_POINTS_DELETED + id, HttpStatus.OK);
     }
