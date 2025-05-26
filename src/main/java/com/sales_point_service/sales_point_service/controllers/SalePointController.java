@@ -3,7 +3,6 @@ package com.sales_point_service.sales_point_service.controllers;
 import com.sales_point_service.sales_point_service.dtos.CreateSalePointRequest;
 import com.sales_point_service.sales_point_service.dtos.SalePointDTO;
 import com.sales_point_service.sales_point_service.dtos.UpdateSalePointRequest;
-import com.sales_point_service.sales_point_service.exceptions.SalePointException;
 import com.sales_point_service.sales_point_service.services.SalePointService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -50,7 +49,7 @@ public class SalePointController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<SalePointDTO> getSalePointById(@PathVariable Long id) throws SalePointException {
+    public ResponseEntity<SalePointDTO> getSalePointById(@PathVariable Long id) {
         return salePointService.getSalePointById(id);
     }
 
@@ -63,7 +62,7 @@ public class SalePointController {
     })
     @PostMapping("/admin")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<SalePointDTO> createSalePoint(@RequestBody CreateSalePointRequest createSalePointRequest) throws SalePointException {
+    public ResponseEntity<SalePointDTO> createSalePoint(@RequestBody CreateSalePointRequest createSalePointRequest) {
         return salePointService.createSalePoint(createSalePointRequest);
     }
 
@@ -77,7 +76,7 @@ public class SalePointController {
     })
     @PutMapping("/admin/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<SalePointDTO> updateSalePoint(@PathVariable Long id, @RequestBody UpdateSalePointRequest updateSalePointRequest) throws SalePointException {
+    public ResponseEntity<SalePointDTO> updateSalePoint(@PathVariable Long id, @RequestBody UpdateSalePointRequest updateSalePointRequest) {
         return salePointService.updateSalePoint(id, updateSalePointRequest);
     }
 

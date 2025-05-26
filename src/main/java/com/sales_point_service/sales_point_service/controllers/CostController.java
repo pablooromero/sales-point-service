@@ -3,8 +3,6 @@ package com.sales_point_service.sales_point_service.controllers;
 import com.sales_point_service.sales_point_service.dtos.CostDTO;
 import com.sales_point_service.sales_point_service.dtos.CreateCostRequest;
 import com.sales_point_service.sales_point_service.dtos.ShortestPathDTO;
-import com.sales_point_service.sales_point_service.exceptions.CostException;
-import com.sales_point_service.sales_point_service.exceptions.SalePointException;
 import com.sales_point_service.sales_point_service.services.CostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,7 +49,7 @@ public class CostController {
     })
     @PostMapping("/admin")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> createCost(@RequestBody CreateCostRequest newCost) throws CostException {
+    public ResponseEntity<String> createCost(@RequestBody CreateCostRequest newCost) {
         return costService.createCost(newCost);
     }
 
@@ -64,7 +62,7 @@ public class CostController {
     })
     @DeleteMapping("/admin/{fromId}/{toId}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> deleteCost(@PathVariable Long fromId, @PathVariable Long toId) throws CostException {
+    public ResponseEntity<String> deleteCost(@PathVariable Long fromId, @PathVariable Long toId) {
         return costService.deleteCost(fromId, toId);
     }
 
@@ -81,7 +79,7 @@ public class CostController {
     public ResponseEntity<ShortestPathDTO> getShortestPath(
             @RequestParam Long from,
             @RequestParam Long to
-    ) throws CostException, SalePointException {
+    ) {
         return costService.getShortestPath(from, to);
     }
 
@@ -95,7 +93,7 @@ public class CostController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @GetMapping("/direct-connections/{fromId}")
-    public ResponseEntity<Set<CostDTO>> getDirectConnections(@PathVariable Long fromId) throws CostException {
+    public ResponseEntity<Set<CostDTO>> getDirectConnections(@PathVariable Long fromId) {
         return costService.getDirectConnections(fromId);
     }
 

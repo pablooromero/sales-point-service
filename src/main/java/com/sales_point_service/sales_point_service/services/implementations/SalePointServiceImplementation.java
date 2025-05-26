@@ -63,7 +63,7 @@ public class SalePointServiceImplementation implements SalePointService {
     }
 
     @Override
-    public ResponseEntity<SalePointDTO> getSalePointById(Long id) throws SalePointException {
+    public ResponseEntity<SalePointDTO> getSalePointById(Long id) {
         log.info(Constants.GET_SALE_POINT, id);
 
         CacheManager<Long, SalePoint> salePointCache = getSalePointCache();
@@ -84,7 +84,7 @@ public class SalePointServiceImplementation implements SalePointService {
     }
 
     @Override
-    public ResponseEntity<SalePointDTO> createSalePoint(CreateSalePointRequest newSalePoint) throws SalePointException {
+    public ResponseEntity<SalePointDTO> createSalePoint(CreateSalePointRequest newSalePoint) {
         log.info(Constants.CREATING_SALE_POINT, newSalePoint);
         validateName(newSalePoint.name());
 
@@ -100,7 +100,7 @@ public class SalePointServiceImplementation implements SalePointService {
     }
 
     @Override
-    public ResponseEntity<SalePointDTO> updateSalePoint(Long id, UpdateSalePointRequest updateSalePoint) throws SalePointException {
+    public ResponseEntity<SalePointDTO> updateSalePoint(Long id, UpdateSalePointRequest updateSalePoint) {
         log.info(Constants.UPDATING_SALE_POINT, id);
         validateName(updateSalePoint.name());
 
@@ -138,7 +138,7 @@ public class SalePointServiceImplementation implements SalePointService {
         return new ResponseEntity<>(Constants.SALE_POINTS_DELETED + id, HttpStatus.OK);
     }
 
-    private void validateName(String name) throws SalePointException {
+    private void validateName(String name) {
         if(name == null || name.isBlank()) {
             throw new SalePointException(Constants.SALE_POINTS_NAME_NOT_NULL, HttpStatus.BAD_REQUEST);
         }

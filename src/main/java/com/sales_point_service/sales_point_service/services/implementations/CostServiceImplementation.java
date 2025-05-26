@@ -80,7 +80,7 @@ public class CostServiceImplementation implements CostService {
     }
 
     @Override
-    public ResponseEntity<String> createCost(CreateCostRequest newCost) throws CostException {
+    public ResponseEntity<String> createCost(CreateCostRequest newCost) {
         log.info(Constants.CREATING_COST);
         LocalDateTime now = LocalDateTime.now();
 
@@ -104,7 +104,7 @@ public class CostServiceImplementation implements CostService {
     }
 
     @Override
-    public ResponseEntity<String> deleteCost(Long fromId, Long toId) throws CostException {
+    public ResponseEntity<String> deleteCost(Long fromId, Long toId) {
         log.info(Constants.DELETING_COST, fromId, toId);
 
         CostId costId = costUtils.createOrderedCostId(fromId, toId);
@@ -122,7 +122,7 @@ public class CostServiceImplementation implements CostService {
     }
 
     @Override
-    public ResponseEntity<Set<CostDTO>> getDirectConnections(Long originId) throws CostException {
+    public ResponseEntity<Set<CostDTO>> getDirectConnections(Long originId) {
         log.info(Constants.GET_DIRECT_CONNECTIONS);
 
         CacheManager<CostId, Cost> costCache = getCostCache();
@@ -159,7 +159,7 @@ public class CostServiceImplementation implements CostService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ResponseEntity<ShortestPathDTO> getShortestPath(Long origin, Long destination) throws CostException, SalePointException {
+    public ResponseEntity<ShortestPathDTO> getShortestPath(Long origin, Long destination) {
         log.info(Constants.GET_SHORTEST_PATH);
 
         CacheManager<CostId, Cost> costCache = getCostCache();

@@ -19,7 +19,7 @@ public class CostUtils {
             Long origin,
             Long destination,
             Map<Long, Map<Long, Double>> graph
-    ) throws CostException {
+    ) {
         Map<Long, Double> distances = new HashMap<>();
         Map<Long, Long> previous = new HashMap<>();
         Set<Long> visited = new HashSet<>();
