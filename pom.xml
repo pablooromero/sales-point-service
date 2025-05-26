@@ -32,7 +32,7 @@
 		<sonar.projectKey>sales-point-service</sonar.projectKey>
 		<sonar.projectName>sales-point-service</sonar.projectName>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.token>squ_d7e7865c12d1bcb1abc0fee698489f7554d7de91</sonar.token>
+		<sonar.token>${env.SONAR_TOKEN}</sonar.token>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 	</properties>
 	<dependencyManagement>
