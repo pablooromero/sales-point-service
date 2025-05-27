@@ -6,6 +6,7 @@ import com.sales_point_service.sales_point_service.models.CostId;
 import com.sales_point_service.sales_point_service.models.SalePoint;
 import com.sales_point_service.sales_point_service.repositories.SalePointRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -21,16 +22,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CostCacheManagerImplementation implements CacheManager<CostId, Cost> {
 
     private final Map<Long, Map<Long, Double>> costGraph = new ConcurrentHashMap<>();
     private final Map<Long, String> salePointNames = new HashMap<>();
 
-    @Autowired
-    private CostRepository costRepository;
+    private final CostRepository costRepository;
 
-    @Autowired
-    private SalePointRepository salePointRepository;
+    private final SalePointRepository salePointRepository;
 
     @PostConstruct
     public void initCache() {

@@ -4,6 +4,7 @@ import com.sales_point_service.sales_point_service.cache.interfaces.CacheManager
 import com.sales_point_service.sales_point_service.models.SalePoint;
 import com.sales_point_service.sales_point_service.repositories.SalePointRepository;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -15,11 +16,11 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@RequiredArgsConstructor
 public class SalePointCacheManagerImplementation implements CacheManager<Long, SalePoint> {
     private final Map<Long, SalePoint> salePointCache = new ConcurrentHashMap<>();
 
-    @Autowired
-    private SalePointRepository salePointRepository;
+    private final SalePointRepository salePointRepository;
 
     @PostConstruct
     public void initCache() {

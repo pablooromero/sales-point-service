@@ -34,6 +34,7 @@
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<sonar.token>${env.SONAR_TOKEN}</sonar.token>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+		<sonar.coverage.exclusions>**/SalesPointServiceApplication.java,**/config/**,**/constants/**,**/exceptions/**,**/models/**,**/enums/**,**/dtos/**,**/interceptors/**</sonar.coverage.exclusions>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -184,6 +185,16 @@
 					<phase>test</phase> <goals>
 					<goal>report</goal>
 				</goals>
+					<configuration>
+						<excludes>
+							<exclude>**/config/**/*.class</exclude>
+							<exclude>**/utils/Constants.class</exclude>
+							<exclude>**/exceptions/**/*.class</exclude>
+							<exclude>**/models/**/*.class</exclude>
+							<exclude>**/enums/**/*.class</exclude>
+							<exclude>**/dtos/**/*.class</exclude>
+						</excludes>
+					</configuration>
 				</execution>
 				<execution>
 					<id>jacoco-check</id>
