@@ -51,7 +51,7 @@ public class CostUtils {
         }
 
         if (!distances.containsKey(destination)) {
-            throw new CostException("No path found between points", HttpStatus.NOT_FOUND);
+            throw new CostException(Constants.PATH_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
 
         List<Long> pathIds = reconstructPath(previous, origin, destination);

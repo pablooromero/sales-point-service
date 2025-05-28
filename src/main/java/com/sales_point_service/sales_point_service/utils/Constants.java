@@ -23,7 +23,6 @@ public class Constants {
     public static final String GET_SHORTEST_PATH="Retrieving shortest path";
     public static final String GET_SHORTEST_PATH_SUCCESSFULLY="Retrieved shortest path successfully";
 
-
     public static final String SAVING_SALE_POINT="Saving sale point: ";
     public static final String SALE_POINT_SAVED_SUCCESSFULLY="Sale point saved successfully";
     public static final String GET_ALL_SALES_POINT="Retrieving all sales points";
@@ -36,4 +35,28 @@ public class Constants {
     public static final String SALE_POINT_UPDATED_SUCCESSFULLY="Sale point updated successfully";
     public static final String DELETING_SALE_POINT="Deleting sale point with ID: ";
     public static final String SALE_POINT_DELETED_SUCCESSFULLY="Sale point deleted successfully";
+    public static final String INIT_CACHE="Initializing Cost and Sale point names cache";
+    public static final String INIT_CACHE_SUCCESSFULLY="Cost cache initialized successfully";
+    public static final String GET_SALE_POINT_NAME_FROM_CACHE_SUCCESSFULLY="Name loaded from the database and cached. For sale point ID: ";
+    public static final String SALE_POINT_NAME_NOT_FOUND_IN_CACHE="Name not found in cache. Attempting to load from DB. For sale point with ID: ";
+    public static final String SALE_POINT_NAME_NOT_FOUND_IN_BD="Sale point not found in DB either with ID: ";
+    public static final String CREATING_COST_WITH_NULL_ID_ATTEMPT="Attempt to add a null cost or with null IDs to the cache: ";
+    public static final String CREATING_UPDATING_COST_IN_CACHE ="Adding/Updating cost to canonical cache: ID {}, Cost: {}";
+    public static final String COST_GRAPH_UPDATED_SUCCESSFULLY ="Updated cost graph for pair {} <-> {} with cost {}";
+    public static final String UPDATING_COST_IN_CACHE ="Updating cost in cache (calling add): {}";
+    public static final String DELETING_COST_WITH_NULL_ID_IN_CACHE ="Attempt to delete a cost with null ID or null internal IDs from the cache: {}";
+    public static final String DELETING_COST_IN_CACHE ="Deleting cost in canonical cache with ID: ";
+    public static final String COST_IN_CACHE_DELETED_SUCCESSFULLY ="Cost removed from graph for pair {} <-> {}";
+    public static final String GET_COST_FROM_CACHE ="Getting canonical cache cost by ID: {}";
+    public static final String GET_ALL_COSTS_FROM_CACHE ="Retrieving all canonical costs from the cache. Size: {}";
+    public static final String CHECKING_IF_CACHE_IS_EMPTY ="Checking if cost cache is empty: {}";
+    public static final String PERFORMING_BULK_LOAD_IN_CACHE ="Performing bulk load into cost cache with {} items";
+    public static final String BULK_LOAD_IN_CACHE_SUCCESSFULLY ="Bulk load completed. Cost cache now has {} items.";
+    public static final String GET_COST_GRAPH ="Accessing the cost graph. Main nodes in the graph: {}";
+    public static final String POPULATING_CACHE_FROM_REPOSITORY ="Empty cost cache, populating from repository";
+    public static final String UPDATING_COST ="Updating existing cost for ID: ";
+    public static final String POPULATING_CACHE_FOR_GET_DIRECT_CONNECTIONS ="Empty cost cache, populating from repository for getDirectConnections";
+    public static final String SOURCE_NODE_NOT_FOUND ="Source node {} not found in cost graph.";
+    public static final String DESTINATION_NODE_NOT_FOUND ="Destination node {} not found in cost graph.";
+    public static final String PATH_NOT_FOUND="No path found between points";
 }
